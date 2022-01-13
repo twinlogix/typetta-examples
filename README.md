@@ -1,2 +1,3 @@
-# typetta-examples
-Some examples of Typetta usage.
+# Typetta Examples
+
+This repository contains a ready to run example demostrating how to use Typetta.

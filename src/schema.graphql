@@ -1,0 +1,8 @@
+scalar Date
+
+type User @mongoEntity {
+  id: ID! @id
+  firstName: String
+  lastName: String
+  birthDate: Date
+}
