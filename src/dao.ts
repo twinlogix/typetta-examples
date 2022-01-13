@@ -10,26 +10,26 @@ import { Collection, Db, Filter, Sort } from 'mongodb';
 export type UserExcludedFields = never
 
 export const userSchema: Schema<types.Scalars> = {
-  'id': {
-    scalar: 'ID', 
-    required: true
+  'birthDate': {
+    scalar: 'Date'
   },
   'firstName': {
     scalar: 'String'
   },
+  'id': {
+    scalar: 'ID', 
+    required: true
+  },
   'lastName': {
     scalar: 'String'
-  },
-  'birthDate': {
-    scalar: 'Date'
   }
 };
 
 type UserFilterFields = {
-  'id'?: string | null | EqualityOperators<string> | ElementOperators | StringOperators,
+  'birthDate'?: any | null | EqualityOperators<any> | ElementOperators | StringOperators,
   'firstName'?: string | null | EqualityOperators<string> | ElementOperators | StringOperators,
-  'lastName'?: string | null | EqualityOperators<string> | ElementOperators | StringOperators,
-  'birthDate'?: any | null | EqualityOperators<any> | ElementOperators | StringOperators
+  'id'?: string | null | EqualityOperators<string> | ElementOperators | StringOperators,
+  'lastName'?: string | null | EqualityOperators<string> | ElementOperators | StringOperators
 };
 export type UserFilter = UserFilterFields & LogicalOperators<UserFilterFields>;
 export type UserRawFilter = () => Filter<{ [key: string]: any }>
@@ -39,32 +39,32 @@ export type UserRelations = {
 }
 
 export type UserProjection = {
-  id?: boolean,
-  firstName?: boolean,
-  lastName?: boolean,
   birthDate?: boolean,
+  firstName?: boolean,
+  id?: boolean,
+  lastName?: boolean,
 };
 
 export type UserSortKeys = 
-  'id'|
+  'birthDate'|
   'firstName'|
-  'lastName'|
-  'birthDate';
+  'id'|
+  'lastName';
 export type UserSort = OneKey<UserSortKeys, SortDirection>;
 export type UserRawSort = () => Sort
 
 export type UserUpdate = {
-  'id'?: string,
+  'birthDate'?: any | null,
   'firstName'?: string | null,
-  'lastName'?: string | null,
-  'birthDate'?: any | null
+  'id'?: string,
+  'lastName'?: string | null
 };
 
 export type UserInsert = {
-  id?: string,
-  firstName?: string,
-  lastName?: string,
   birthDate?: any,
+  firstName?: string,
+  id?: string,
+  lastName?: string,
 };
 
 type UserDAOGenerics<MetadataType, OperationMetadataType> = MongoDBDAOGenerics<types.User, 'id', 'ID', 'generator', UserFilter, UserRawFilter, UserRelations, UserProjection, UserSort, UserRawSort, UserInsert, UserUpdate, UserExcludedFields, MetadataType, OperationMetadataType, types.Scalars>;
