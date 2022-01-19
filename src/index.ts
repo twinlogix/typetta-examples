@@ -1,46 +1,58 @@
-import { DAOContext } from './dao';
-import { MongoMemoryServer } from 'mongodb-memory-server';
-import { MongoClient } from 'mongodb';
-import { v4 as uuid } from 'uuid';
-import { identityAdapter } from '@twinlogix/typetta';
+import { DAOContext } from './dao'
+import { MongoMemoryServer } from 'mongodb-memory-server'
+import { MongoClient } from 'mongodb'
+import { v4 as uuid } from 'uuid'
+import { identityAdapter } from '@twinlogix/typetta'
 
 const main = async () => {
+  const mongoServer = await MongoMemoryServer.create()
+  const mongoConnection = await MongoClient.connect(mongoServer.getUri())
+  const mongoDb = mongoConnection.db('example-db')
 
-  const mongoServer = await MongoMemoryServer.create();
-  const mongoConnection = await MongoClient.connect(mongoServer.getUri());
-  const mongoDb = mongoConnection.db('example-db');
-
-  const daoContext = new DAOContext({
+  const dao = new DAOContext({
     mongo: {
-      default: mongoDb
+      default: mongoDb,
     },
     scalars: {
       ID: { ...identityAdapter, generate: () => uuid() },
-      Date: identityAdapter
-    }
-  });
+      Date: identityAdapter,
+    },
+    log: true,
+  })
 
-  const user1 = await daoContext.user.insertOne({
+  const user1 = await dao.user.insertOne({
     record: {
-      firstName: "Mattia",
-      lastName: "Minotti"
-    }
-  });
+      firstName: 'Mattia',
+      lastName: 'Minotti',
+    },
+  })
 
-  const user2 = await daoContext.user.insertOne({
+  const user2 = await dao.user.insertOne({
     record: {
-      firstName: "Edoardo",
-      lastName: "Barbieri"
-    }
-  });
+      firstName: 'Edoardo',
+      lastName: 'Barbieri',
+    },
+  })
 
-  const users = await daoContext.user.findAll();
-  users.forEach(user => console.log(`${user.firstName} ${user.lastName}`));
+  const user3 = await dao.user.insertOne({
+    record: {
+      firstName: 'Bruno',
+      lastName: 'Barbieri',
+    },
+  })
 
-};
+  const result = await dao.user.aggregate({
+    by: {
+      lastName: true,
+    },
+    aggregations: { count: { operation: 'count' } },
+  })
+
+  const users = await dao.user.findAll()
+  users.forEach((user) => console.log(`${user.firstName} ${user.lastName}`))
+  console.log(result)
+}
 
 main()
   .then()
-  .catch((error) => console.log(error));
-
-
+  .catch((error) => console.log(error))
