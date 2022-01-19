@@ -6,9 +6,13 @@ generates:
     config:
       scalars:
         Date: Date
+        MongoID: mongodb#ObjectId
   src/dao.ts:
     config:
       schemaImport: './schema.graphql'
       tsTypesImport: './models'
+      scalars:
+        Date: Date
+        MongoID: mongodb#ObjectId
     plugins:
       - '@twinlogix/typetta'

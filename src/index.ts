@@ -41,11 +41,15 @@ const main = async () => {
     },
   })
 
-  const result = await dao.user.aggregate({
+  for (let i = 0; i < 4; i++) {
+    await dao.post.insertOne({ record: { creationDate: new Date(), views: i, userId: [user1, user2, user3][i % 3].id } })
+  }
+
+  const result = await dao.post.aggregate({
     by: {
-      lastName: true,
+      userId: true
     },
-    aggregations: { count: { operation: 'count' } },
+    aggregations: { views: { operation: 'sum', field: 'views' }, count: { operation: 'count' } },
   })
 
   const users = await dao.user.findAll()
