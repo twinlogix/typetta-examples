@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@twinlogix/typetta": "1.0.0-beta.22",
-    "mongodb-memory-server": "8.1.0",
+    "mongodb-memory-server": "8.2.0",
     "uuid": "8.3.2"
   }
 }
