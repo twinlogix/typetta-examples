@@ -5,17 +5,12 @@ import { v4 as uuid } from 'uuid'
 import { identityAdapter } from '@twinlogix/typetta'
 
 const main = async () => {
-  const mongoServer = await MongoMemoryServer.create()
-  const mongoConnection = await MongoClient.connect(mongoServer.getUri())
-  const mongoDb = mongoConnection.db('example-db')
-
   const dao = new DAOContext({
-    mongo: {
-      default: mongoDb,
+    mongodb: {
+      default: 'mock',
     },
     scalars: {
-      ID: { ...identityAdapter, generate: () => uuid() },
-      Date: identityAdapter,
+      ID: { generate: () => uuid() },
     },
     log: true,
   })

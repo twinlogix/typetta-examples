@@ -1,17 +1,17 @@
 scalar Date
-scalar MongoID
+scalar ID
 
-type User @mongoEntity {
-  id: MongoID! @id(from: "db") @alias(value: "_id")
+type User @entity @mongodb {
+  id: ID! @id(from: "generator") 
   firstName: String
   lastName: String
   birthDate: Date
-  posts: [Post!] @foreignRef(refFrom: "userId")
+  posts: [Post!]! @foreignRef(refFrom: "userId")
 }
 
-type Post @mongoEntity {
-  id: MongoID! @id(from: "db") @alias(value: "_id")
-  userId: MongoID!
+type Post @entity @mongodb {
+  id: ID! @id(from: "generator")
+  userId: ID!
   content: String
   views: Int!
   creationDate: Date!

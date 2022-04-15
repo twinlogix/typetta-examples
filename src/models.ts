@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -11,16 +10,15 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
-  Date: Date;
-  MongoID: ObjectId;
+  Date: any;
 };
 
 export type Post = {
   __typename?: 'Post';
   content?: Maybe<Scalars['String']>;
   creationDate: Scalars['Date'];
-  id: Scalars['MongoID'];
-  userId: Scalars['MongoID'];
+  id: Scalars['ID'];
+  userId: Scalars['ID'];
   views: Scalars['Int'];
 };
 
@@ -28,7 +26,7 @@ export type User = {
   __typename?: 'User';
   birthDate?: Maybe<Scalars['Date']>;
   firstName?: Maybe<Scalars['String']>;
-  id: Scalars['MongoID'];
+  id: Scalars['ID'];
   lastName?: Maybe<Scalars['String']>;
-  posts?: Maybe<Array<Post>>;
+  posts: Array<Post>;
 };

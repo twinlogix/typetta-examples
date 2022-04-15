@@ -3,16 +3,12 @@ generates:
   src/models.ts:
     plugins:
       - 'typescript'
-    config:
-      scalars:
-        Date: Date
-        MongoID: mongodb#ObjectId
   src/dao.ts:
     config:
       schemaImport: './schema.graphql'
       tsTypesImport: './models'
       scalars:
         Date: Date
-        MongoID: mongodb#ObjectId
+        MongoID: string
     plugins:
       - '@twinlogix/typetta'
