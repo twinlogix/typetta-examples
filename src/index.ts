@@ -1,8 +1,5 @@
 import { DAOContext } from './dao'
-import { MongoMemoryServer } from 'mongodb-memory-server'
-import { MongoClient } from 'mongodb'
 import { v4 as uuid } from 'uuid'
-import { identityAdapter } from '@twinlogix/typetta'
 
 const main = async () => {
   const dao = new DAOContext({
