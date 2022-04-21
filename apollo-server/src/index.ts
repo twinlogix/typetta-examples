@@ -3,7 +3,7 @@ import { PartialDeep } from 'type-fest'
 import { User } from './models'
 import { typeDefs } from './schema'
 import { getDao } from './utils'
-import { typeDefs as directive } from '@twinlogix/typetta'
+import { mock, typeDefs as directive } from '@twinlogix/typetta'
 import { mergeTypeDefs } from '@graphql-tools/merge'
 import { createServer } from 'http'
 import { ApolloServer } from 'apollo-server-express'
@@ -25,34 +25,30 @@ const main = async () => {
     Subscription: {
       users: {
         subscribe: (parent: never, args: never, ctx: unknown, info: GraphQLResolveInfo) => {
-          return dao.user.liveFindAll({ projection: info }).map((v) => ({ users: v }))
+          return dao.user
+            .liveFindAll({
+              projection: info,
+              maxRateMs: 500,
+              relations: { posts: { limit: 3, sorts: [{ creationDate: 'desc' }] } },
+            })
+            .map((v) => ({ users: v }))
         },
       },
     },
   }
 
   const schema = makeExecutableSchema({ typeDefs: mergeTypeDefs([typeDefs, directive]), resolvers })
-
-  // Create an Express app and HTTP server; we will attach the WebSocket
-  // server and the ApolloServer to this HTTP server.
   const app = express()
   const httpServer = createServer(app)
-
-  // Set up WebSocket server.
   const wsServer = new WebSocketServer({
     server: httpServer,
     path: '/graphql',
   })
   const serverCleanup = useServer({ schema }, wsServer)
-
-  // Set up ApolloServer.
   const server = new ApolloServer({
     schema,
     plugins: [
-      // Proper shutdown for the HTTP server.
       ApolloServerPluginDrainHttpServer({ httpServer }),
-
-      // Proper shutdown for the WebSocket server.
       {
         async serverWillStart() {
           return {
@@ -66,19 +62,14 @@ const main = async () => {
   })
   await server.start()
   server.applyMiddleware({ app })
-
-  // Now that our HTTP server is fully set up, actually listen.
   httpServer.listen(4001, () => {
     console.log(`🚀 Query endpoint ready at http://localhost:4001${server.graphqlPath}`)
     console.log(`🚀 Subscription endpoint ready at ws://localhost:4001${server.graphqlPath}`)
   })
 
   setInterval(() => {
-    dao.user.updateOne({ filter: { firstName: 'Edoardo' }, changes: { birthDate: new Date() } })
-  }, 1000)
-  setInterval(() => {
     dao.post.insertOne({ record: { creationDate: new Date(), views: 1, userId: userId ?? '' } })
-  }, 20000)
+  }, 2000)
 }
 
 main()

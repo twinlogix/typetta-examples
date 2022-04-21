@@ -9,17 +9,19 @@ export async function getDao(): Promise<DAOContext> {
     scalars: {
       ID: { generate: () => uuid() },
     },
-    log: true,
+    log: async (args) => {
+      console.log(args.operation, args.dao, JSON.parse(args.query ?? '{}')?.filter)
+    },
   })
 
-  const user1 = await dao.user.insertOne({
+  await dao.user.insertOne({
     record: {
       firstName: 'Mattia',
       lastName: 'Minotti',
     },
   })
 
-  const user2 = await dao.user.insertOne({
+  await dao.user.insertOne({
     record: {
       firstName: 'Edoardo',
       lastName: 'Barbieri',
