@@ -1,0 +1,21 @@
+schema: 'src/schema.graphql'
+generates:
+  src/models.generated.ts:
+    plugins:
+      - 'typescript'
+  src/dao.generated.ts:
+    config:
+      schemaImport: './schema.ts'
+      tsTypesImport: './models.generated'
+      generationOutput: 'dao'
+      scalars:
+        Date: Date
+        MongoID: string
+    plugins:
+      - '@twinlogix/typetta'
+  src/inputs.generated.graphql:
+    config:
+      generationOutput: 'inputs'
+      namingConvention: keep
+    plugins:
+      - '@twinlogix/typetta'

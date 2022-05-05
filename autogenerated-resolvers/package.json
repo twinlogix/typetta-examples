@@ -1,0 +1,33 @@
+{
+  "name": "apollo-server",
+  "version": "1..0-beta.1",
+  "scripts": {
+    "start": "node dist/index",
+    "generate": "graphql-codegen --config codegen-model.yml && graphql-codegen --config codegen-resolver.yml",
+    "clean": "rm -rf dist",
+    "build": "npm -s run clean && npm -s run generate && tsc && copyfiles -u 1 src/*.graphql dist/"
+  },
+  "devDependencies": {
+    "@graphql-codegen/add": "^3.1.1",
+    "@types/node": "^17.0.31",
+    "@types/uuid": "8.3.4",
+    "apollo-server-types": "^3.5.2",
+    "copyfiles": "^2.4.1",
+    "graphql-import-node": "^0.0.5",
+    "typescript": "4.5.4"
+  },
+  "dependencies": {
+    "@graphql-tools/merge": "^8.2.10",
+    "@graphql-tools/schema": "^8.3.10",
+    "@twinlogix/typetta": "1.6.0-beta.6",
+    "apollo-server": "^3.6.7",
+    "apollo-server-core": "^3.6.7",
+    "express": "^4.17.3",
+    "graphql": "^15.8.0",
+    "graphql-modules": "^2.0.0",
+    "graphql-ws": "^5.7.0",
+    "type-fest": "^2.12.2",
+    "uuid": "8.3.2",
+    "ws": "^8.5.0"
+  }
+}

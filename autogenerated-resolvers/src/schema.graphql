@@ -1,0 +1,23 @@
+scalar Date
+scalar ID
+
+type User @entity @memory {
+  id: ID! @id(from: "generator")
+  firstName: String!
+  lastName: String!
+  birthDate: Date
+  posts: [Post!] @foreignRef(refFrom: "userId")
+}
+
+type Post @entity @memory {
+  id: ID! @id(from: "generator")
+  userId: ID!
+  content: String!
+  creationDate: Date! @default(from: "generator")
+  metadata: Metadata
+}
+
+type Metadata {
+  tags: [String!]
+  views: Int
+}
