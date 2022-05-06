@@ -15,7 +15,7 @@ generates:
       - typescript-resolvers
     config:
       resolverTypeWrapperSignature: PartialDeep<T>
-      contextType: ./dao.generated#DAOContext
+      contextType: ./utils#ExampleDAOContext
       namespacedImportName: types
   src/resolvers.generated.ts:
     config:
