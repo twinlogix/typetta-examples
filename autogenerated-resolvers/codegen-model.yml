@@ -3,7 +3,7 @@ generates:
   src/models.generated.ts:
     plugins:
       - 'typescript'
-  src/dao.generated.ts:
+  src/orm.generated.ts:
     config:
       schemaImport: './schema.ts'
       tsTypesImport: './models.generated'
@@ -13,7 +13,7 @@ generates:
         MongoID: string
     plugins:
       - '@twinlogix/typetta'
-  src/inputs.generated.graphql:
+  src/operations.types.generated.graphql:
     config:
       generationOutput: 'inputs'
       namingConvention: keep

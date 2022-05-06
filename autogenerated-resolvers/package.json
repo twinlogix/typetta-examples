@@ -19,7 +19,7 @@
   "dependencies": {
     "@graphql-tools/merge": "^8.2.10",
     "@graphql-tools/schema": "^8.3.10",
-    "@twinlogix/typetta": "1.6.0-beta.9",
+    "@twinlogix/typetta": "1.6.0-beta.10",
     "apollo-server": "^3.6.7",
     "apollo-server-core": "^3.6.7",
     "express": "^4.17.3",

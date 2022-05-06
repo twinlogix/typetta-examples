@@ -1,25 +1,26 @@
 schema: 'src/**.graphql'
 generates:
-  src/types.generated.ts:
+  src/schema-types.generated.ts:
     plugins:
       - 'typescript'
     config:
       enumsAsConst: true
       inputMaybeValue: T | undefined
-  src/resolvers.types.generated.ts:
+  src/operations.types.generated.ts:
     plugins:
       - add:
           content:
             - import { PartialDeep } from 'type-fest'
-            - import * as types from './types.generated'
+            - import * as types from './schema-types.generated'
       - typescript-resolvers
     config:
       resolverTypeWrapperSignature: PartialDeep<T>
-      contextType: ./utils#ExampleDAOContext
+      contextType: ./index#Context
       namespacedImportName: types
-  src/resolvers.generated.ts:
+  src/operations.generated.ts:
     config:
       generationOutput: resolvers
-      tsTypesImport: ./resolvers.types.generated
+      tsTypesImport: ./operations.types.generated
+      daoContextPath: entityManager
     plugins:
       - '@twinlogix/typetta'
