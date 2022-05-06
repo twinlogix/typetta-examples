@@ -1,21 +1,21 @@
-schema: 'src/schema.graphql'
+schema: 'src/schema.ts'
 generates:
-  src/models.generated.ts:
-    plugins:
-      - 'typescript'
   src/orm.generated.ts:
     config:
       schemaImport: './schema.ts'
-      tsTypesImport: './models.generated'
+      tsTypesImport: './model.generated'
       generationOutput: 'dao'
       scalars:
         Date: Date
         MongoID: string
     plugins:
       - '@twinlogix/typetta'
-  src/operations.types.generated.graphql:
+  src/operations.graphql.generated.ts:
     config:
       generationOutput: 'inputs'
       namingConvention: keep
     plugins:
       - '@twinlogix/typetta'
+hooks:
+  afterAllFileWrite:
+    - prettier --write

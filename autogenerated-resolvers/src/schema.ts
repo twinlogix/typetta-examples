@@ -1,3 +1,6 @@
+import { gql } from 'graphql-tag'
+
+export default gql`
 scalar Date
 scalar ID
 
@@ -30,3 +33,4 @@ type Like @entity @memory {
   userId: ID!
   creationDate: Date! @default(from: "generator")
 }
+`

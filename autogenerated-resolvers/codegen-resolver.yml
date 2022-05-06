@@ -1,6 +1,6 @@
-schema: 'src/**.graphql'
+schema: ['src/schema.ts', 'src/operations.graphql.generated.ts']
 generates:
-  src/schema-types.generated.ts:
+  src/model.generated.ts:
     plugins:
       - 'typescript'
     config:
@@ -11,7 +11,7 @@ generates:
       - add:
           content:
             - import { PartialDeep } from 'type-fest'
-            - import * as types from './schema-types.generated'
+            - import * as types from './model.generated'
       - typescript-resolvers
     config:
       resolverTypeWrapperSignature: PartialDeep<T>
@@ -24,3 +24,6 @@ generates:
       daoContextPath: entityManager
     plugins:
       - '@twinlogix/typetta'
+hooks:
+  afterAllFileWrite:
+    - prettier --write
