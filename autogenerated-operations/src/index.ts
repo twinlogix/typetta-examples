@@ -1,10 +1,10 @@
 import { ApolloServer } from 'apollo-server'
-import { resolvers } from './operations.generated'
+import { resolvers } from './generated/resolvers'
 import { mergeTypeDefs } from '@graphql-tools/merge'
-import inputTypeDefs from './operations.graphql.generated'
+import inputTypeDefs from './generated/operations'
 import schemaTypeDefs from './schema'
 import { typeDefs as typettaDirectivesTypeDefs } from '@twinlogix/typetta'
-import { DAOContext } from './orm.generated'
+import { DAOContext } from './generated/typetta'
 import { v4 as uuid } from 'uuid'
 
 export type Context = {
@@ -24,7 +24,11 @@ async function createContext(): Promise<Context> {
 }
 
 const server = new ApolloServer({
-  typeDefs: mergeTypeDefs([inputTypeDefs, schemaTypeDefs, typettaDirectivesTypeDefs]),
+  typeDefs: mergeTypeDefs([
+    inputTypeDefs,
+    schemaTypeDefs,
+    typettaDirectivesTypeDefs,
+  ]),
   resolvers,
   context: createContext,
 })

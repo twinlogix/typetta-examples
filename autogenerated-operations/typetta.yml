@@ -1,0 +1,6 @@
+schema: src/schema.ts
+outputDir: src/generated
+generateGraphQLOperations:
+  context: 
+    type: '../index#Context'
+    path: entityManager
