@@ -2,7 +2,6 @@ import { gql } from 'graphql-tag'
 
 export default gql`
 scalar Date
-scalar ID
 
 type User @entity @memory {
   id: ID! @id(from: "generator")

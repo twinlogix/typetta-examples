@@ -4,3 +4,6 @@ generateGraphQLOperations:
   context: 
     type: '../index#Context'
     path: entityManager
+scalars:
+  ID: string
+  Date: Date
