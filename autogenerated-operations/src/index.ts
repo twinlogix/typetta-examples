@@ -4,16 +4,17 @@ import { mergeTypeDefs } from '@graphql-tools/merge'
 import inputTypeDefs from './generated/operations'
 import schemaTypeDefs from './schema'
 import { typeDefs as typettaDirectivesTypeDefs } from '@twinlogix/typetta'
-import { DAOContext } from './generated/typetta'
+import { EntityManager } from './generated/typetta'
 import { v4 as uuid } from 'uuid'
+import { seedInitialData } from './seed'
 
 export type Context = {
-  entityManager: DAOContext
+  entityManager: EntityManager
 }
 
 async function createContext(): Promise<Context> {
   return {
-    entityManager: new DAOContext({
+    entityManager: new EntityManager({
       scalars: {
         ID: { generate: () => uuid() },
         Date: { generate: () => new Date() },
@@ -33,6 +34,11 @@ const server = new ApolloServer({
   context: createContext,
 })
 
-server.listen().then(({ url }) => {
-  console.log(`🚀  Server ready at ${url}`)
+createContext().then((context) => {
+  seedInitialData(context).then(() => {
+    console.log('Seed completed')
+    server.listen().then(({ url }) => {
+      console.log(`🚀  Server ready at ${url}`)
+    })
+  })
 })
