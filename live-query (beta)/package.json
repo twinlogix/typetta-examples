@@ -18,7 +18,7 @@
     "@twinlogix/typetta": "1.5.0-beta.11",
     "apollo-server": "^3.6.7",
     "apollo-server-core": "^3.6.7",
-    "express": "^4.17.3",
+    "express": "4.18.1",
     "graphql": "^15.8.0",
     "graphql-modules": "^2.0.0",
     "graphql-ws": "^5.7.0",
