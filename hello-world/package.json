@@ -3,7 +3,7 @@
   "version": "1.0.0-beta.1",
   "scripts": {
     "start": "node dist/index",
-    "generate": "graphql-codegen",
+    "generate": "typetta generate --config typetta.yml",
     "clean": "rm -rf dist",
     "build": "npm -s run clean && npm -s run generate && tsc"
   },
@@ -12,7 +12,7 @@
     "typescript": "4.5.4"
   },
   "dependencies": {
-    "@twinlogix/typetta": "1.5.5",
+    "@twinlogix/typetta": "1.6.2",
     "uuid": "8.3.2"
   }
 }

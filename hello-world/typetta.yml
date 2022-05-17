@@ -1,0 +1,3 @@
+schema: src/**.graphql
+outputDir: src/generated
+generateGraphQLOperations: false

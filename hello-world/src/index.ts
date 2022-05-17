@@ -1,8 +1,8 @@
-import { DAOContext } from './dao'
 import { v4 as uuid } from 'uuid'
+import { EntityManager } from './generated/typetta'
 
 const main = async () => {
-  const dao = new DAOContext({
+  const dao = new EntityManager({
     mongodb: {
       default: 'mock',
     },
