@@ -2,7 +2,7 @@ import { v4 as uuid } from 'uuid'
 import { EntityManager } from './generated/typetta'
 
 const main = async () => {
-  const dao = new EntityManager({
+  const entityManager = new EntityManager({
     mongodb: {
       default: 'mock',
     },
@@ -12,21 +12,21 @@ const main = async () => {
     log: true,
   })
 
-  const user1 = await dao.user.insertOne({
+  const user1 = await entityManager.user.insertOne({
     record: {
       firstName: 'Mattia',
       lastName: 'Minotti',
     },
   })
 
-  const user2 = await dao.user.insertOne({
+  const user2 = await entityManager.user.insertOne({
     record: {
       firstName: 'Edoardo',
       lastName: 'Barbieri',
     },
   })
 
-  const user3 = await dao.user.insertOne({
+  const user3 = await entityManager.user.insertOne({
     record: {
       firstName: 'Bruno',
       lastName: 'Barbieri',
@@ -34,17 +34,17 @@ const main = async () => {
   })
 
   for (let i = 0; i < 4; i++) {
-    await dao.post.insertOne({ record: { creationDate: new Date(), views: i, userId: [user1, user2, user3][i % 3].id } })
+    await entityManager.post.insertOne({ record: { creationDate: new Date(), views: i, userId: [user1, user2, user3][i % 3].id } })
   }
 
-  const result = await dao.post.aggregate({
+  const result = await entityManager.post.aggregate({
     by: {
       userId: true
     },
     aggregations: { views: { operation: 'sum', field: 'views' }, count: { operation: 'count' } },
   })
 
-  const users = await dao.user.findAll()
+  const users = await entityManager.user.findAll()
   users.forEach((user) => console.log(`${user.firstName} ${user.lastName}`))
   console.log(result)
 }
