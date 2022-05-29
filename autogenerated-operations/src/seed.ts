@@ -2,10 +2,10 @@ import { Context } from '.'
 
 export async function seedInitialData({ entityManager }: Context) {
   const u1 = await entityManager.user.insertOne({
-    record: { firstName: 'Mattia', lastName: 'Minotti' },
+    record: { firstName: 'Mattia', lastName: 'Minotti', id: '1' },
   })
   const u2 = await entityManager.user.insertOne({
-    record: { firstName: 'Edoardo', lastName: 'Barbieri' },
+    record: { firstName: 'Edoardo', lastName: 'Barbieri', id: '2' },
   })
   const p1 = await entityManager.post.insertOne({
     record: {
