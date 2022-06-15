@@ -3,6 +3,10 @@ import { gql } from 'graphql-tag'
 export default gql`
 scalar Date
 
+enum Permission {
+  IAM_USER,
+}
+
 type User @entity @memory {
   id: ID! @id(from: "generator")
   firstName: String!
