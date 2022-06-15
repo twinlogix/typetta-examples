@@ -12,7 +12,7 @@
     "typescript": "4.5.4"
   },
   "dependencies": {
-    "@twinlogix/typetta": "1.6.2",
+    "@twinlogix/typetta": "2.0.0",
     "uuid": "8.3.2"
   }
 }
