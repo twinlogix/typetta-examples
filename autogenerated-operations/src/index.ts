@@ -27,7 +27,7 @@ type OperationSecurityDomain = {
 
 async function createContext(
   secure: boolean,
-  userIds?: string,
+  loggedUserId: string
 ): Promise<Context> {
   return {
     entityManager: new EntityManager<
@@ -87,10 +87,8 @@ async function createContext(
             defaultPermissions: PERMISSION.READ_ONLY,
           },
         },
-        context: { permissions: { IAM_USER: [{ userId: '1' }] } },
-        operationDomain: () => {
-          return userIds ? { userId: userIds.split(',') } : undefined
-        },
+        context: { permissions: { IAM_USER: [{ userId: loggedUserId }] } },
+        operationDomain: () => undefined,
       },
     }),
   }
@@ -103,10 +101,10 @@ const server = new ApolloServer({
     typettaDirectivesTypeDefs,
   ]),
   resolvers,
-  context: (event: any) => createContext(true, event.req?.headers?.users),
+  context: (event: any) => createContext(true, event.req?.headers?.user),
 })
 
-createContext(false).then((context) => {
+createContext(false, '').then((context) => {
   seedInitialData(context).then(() => {
     console.log('Seed completed')
     server.listen().then(({ url }) => {

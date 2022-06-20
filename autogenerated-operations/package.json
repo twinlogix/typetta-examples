@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@twinlogix/typetta": "2.0.0",
+    "@twinlogix/typetta": "2.1.0",
     "apollo-server": "^3.7.0",
     "uuid": "^8.3.2"
   },
