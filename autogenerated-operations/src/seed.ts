@@ -11,20 +11,23 @@ export async function seedInitialData({ entityManager }: Context) {
     record: {
       userId: u1.id,
       content: 'Id Typetta cool?',
-      metadata: { views: 1 },
+      metadata: { views: 1, tags: ['2'] },
     },
   })
   const p2 = await entityManager.post.insertOne({
     record: {
       userId: u1.id,
       content: 'Graphql Security',
-      metadata: { views: 2 },
+      metadata: { views: 2, tags: ['4'] },
     },
   })
   const p3 = await entityManager.post.insertOne({
     record: {
       userId: u1.id,
       content: 'Graphql federation',
+      metadata: {
+        tags: ['1', '2', '3'],
+      },
     },
   })
   const p4 = await entityManager.post.insertOne({
